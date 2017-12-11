@@ -44,7 +44,7 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var ReactDOM = __webpack_require__(1);
 	var React = __webpack_require__(183);
@@ -53,15 +53,15 @@
 	var Provider = __webpack_require__(249).Provider;
 
 	function reducer(state) {
-	    return state;
+	  return state;
 	}
 
 	var store = Redux.createStore(reducer, window.PROPS);
 
 	ReactDOM.render(React.createElement(
-	    Provider,
-	    { store: store },
-	    routes
+	  Provider,
+	  { store: store },
+	  routes
 	), document);
 
 /***/ }),
@@ -27574,10 +27574,10 @@
 /* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -27599,89 +27599,120 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Layout = function (_React$Component) {
-	    _inherits(Layout, _React$Component);
+	  _inherits(Layout, _React$Component);
 
-	    function Layout() {
-	        _classCallCheck(this, Layout);
+	  function Layout() {
+	    _classCallCheck(this, Layout);
 
-	        var _this = _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).call(this));
+	    return _possibleConstructorReturn(this, (Layout.__proto__ || Object.getPrototypeOf(Layout)).call(this));
+	  }
 
-	        _this._handleClick = _this._handleClick.bind(_this);
-	        return _this;
-	    }
+	  _createClass(Layout, [{
+	    key: "render",
+	    value: function render() {
+	      var custom = this.props.custom;
 
-	    _createClass(Layout, [{
-	        key: '_handleClick',
-	        value: function _handleClick() {
-	            alert(this.props.custom.title);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            var custom = this.props.custom;
-
-	            return _react2.default.createElement(
-	                'html',
-	                null,
+	      return _react2.default.createElement(
+	        "html",
+	        { lang: "en" },
+	        _react2.default.createElement(
+	          "head",
+	          null,
+	          _react2.default.createElement("meta", { charSet: "utf-8" }),
+	          _react2.default.createElement("meta", {
+	            name: "viewport",
+	            content: "width=device-width, initial-scale=1, shrink-to-fit=no"
+	          }),
+	          _react2.default.createElement("link", { rel: "manifest", href: "/manifest.json" }),
+	          _react2.default.createElement("link", { rel: "shortcut icon", href: "/favicon.ico" }),
+	          _react2.default.createElement(
+	            "title",
+	            null,
+	            custom.title
+	          ),
+	          _react2.default.createElement("link", { rel: "stylesheet", href: "/style.css" })
+	        ),
+	        _react2.default.createElement(
+	          "body",
+	          null,
+	          _react2.default.createElement(
+	            "noscript",
+	            null,
+	            "You need to enable JavaScript to run this app."
+	          ),
+	          _react2.default.createElement(
+	            "div",
+	            { className: "App" },
+	            _react2.default.createElement(
+	              "nav",
+	              { className: "navbar navbar-default navbar-static-top" },
+	              _react2.default.createElement(
+	                "div",
+	                { className: "container" },
 	                _react2.default.createElement(
-	                    'head',
-	                    null,
-	                    _react2.default.createElement(
-	                        'title',
-	                        null,
-	                        custom.title
-	                    ),
-	                    _react2.default.createElement('link', { rel: 'stylesheet', href: '/style.css' })
+	                  "div",
+	                  { className: "navbar-header" },
+	                  _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: "/invoices", className: "navbar-brand" },
+	                    "Invoice App"
+	                  )
 	                ),
 	                _react2.default.createElement(
-	                    'body',
-	                    null,
-	                    this.props.children,
+	                  "div",
+	                  { className: "navbar-collapse collapse" },
+	                  _react2.default.createElement(
+	                    "ul",
+	                    { className: "nav navbar-nav" },
 	                    _react2.default.createElement(
-	                        'ul',
-	                        null,
-	                        _react2.default.createElement(
-	                            'li',
-	                            null,
-	                            _react2.default.createElement(
-	                                _reactRouter.Link,
-	                                { to: '/' },
-	                                'Home'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'li',
-	                            null,
-	                            _react2.default.createElement(
-	                                _reactRouter.Link,
-	                                { to: '/customers' },
-	                                'Customers'
-	                            )
-	                        ),
-	                        _react2.default.createElement(
-	                            'li',
-	                            null,
-	                            _react2.default.createElement(
-	                                _reactRouter.Link,
-	                                { to: '/products' },
-	                                'Products'
-	                            )
-	                        )
+	                      "li",
+	                      null,
+	                      _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: "/customers" },
+	                        "Customers"
+	                      )
 	                    ),
-	                    _react2.default.createElement('script', { dangerouslySetInnerHTML: {
-	                            __html: 'window.PROPS=' + JSON.stringify(custom)
-	                        } }),
-	                    _react2.default.createElement('script', { src: '/bundle.js' })
-	                )
-	            );
-	        }
-	    }]);
+	                    _react2.default.createElement(
+	                      "li",
+	                      null,
+	                      _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: "/products" },
+	                        "Products"
+	                      )
+	                    ),
+	                    _react2.default.createElement(
+	                      "li",
+	                      null,
+	                      _react2.default.createElement(
+	                        _reactRouter.Link,
+	                        { to: "/invoices" },
+	                        "Invoices"
+	                      )
+	                    )
+	                  )
+	                ),
+	                this.props.children
+	              )
+	            )
+	          ),
+	          _react2.default.createElement("script", {
+	            dangerouslySetInnerHTML: {
+	              __html: "window.PROPS=" + JSON.stringify(custom)
+	            }
+	          }),
+	          _react2.default.createElement("script", { src: "/bundle.js" })
+	        )
+	      );
+	    }
+	  }]);
 
-	    return Layout;
+	  return Layout;
 	}(_react2.default.Component);
 
 	var wrapper = (0, _reactRedux.connect)(function (state) {
-	    return { custom: state };
+	  return { custom: state };
 	});
 
 	exports.default = wrapper(Layout);

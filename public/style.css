@@ -1,7 +1,14 @@
-body {
+.App {
   width: 99%;
 }
 
-body h2 {
+.App h2 {
   text-align: center;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
 }
