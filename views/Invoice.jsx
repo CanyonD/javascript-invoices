@@ -21,13 +21,13 @@ class Invoice extends Component {
       customers: []
     };
 
-    axios.get("http://localhost:8800/api/products").then(results => {
+    axios.get("/api/products").then(results => {
       this.setState({
         products: results.data
       });
     });
 
-    axios.get("http://localhost:8800/api/customers").then(results => {
+    axios.get("/api/customers").then(results => {
       this.setState({
         customers: results.data
       });
@@ -54,13 +54,13 @@ class Invoice extends Component {
 
   componentDidMount(callback) {
     axios
-      .get("http://localhost:8800/api/invoices/" + this.id + "/items/")
+      .get("/api/invoices/" + this.id + "/items/")
       .then(results => {
         let res = results.data;
         results.data.map((x, y) => {
           if (x.product_id !== 0) {
             axios
-              .get("http://localhost:8800/api/products/" + x.product_id)
+              .get("/api/products/" + x.product_id)
               .then(results => {
                 if (results.data === null) res[y].items = [];
                 else {
@@ -98,7 +98,7 @@ class Invoice extends Component {
     let calc_total = total - total * value / 100;
 
     axios
-      .put("http://localhost:8800/api/invoices/" + this.id, {
+      .put("/api/invoices/" + this.id, {
         discount: value,
         total: calc_total
       })
@@ -110,7 +110,7 @@ class Invoice extends Component {
   handleRemoveClick(event) {
     axios
       .delete(
-        "http://localhost:8800/api/invoices/" + this.id + "/items/" + event.id
+        "/api/invoices/" + this.id + "/items/" + event.id
       )
       .then(results => {
         this.componentDidMount();
@@ -121,7 +121,7 @@ class Invoice extends Component {
     let value = event.target.value;
     axios
       .put(
-        "http://localhost:8800/api/invoices/" +
+        "/api/invoices/" +
           this.id +
           "/items/" +
           event.target.attributes.item_id.value,
@@ -137,7 +137,7 @@ class Invoice extends Component {
 
   handleChangeCustomer(event) {
     axios
-      .put("http://localhost:8800/api/invoices/" + this.id, {
+      .put("/api/invoices/" + this.id, {
         customer_id: event.target.value
       })
       .then(results => {
@@ -154,7 +154,7 @@ class Invoice extends Component {
     });
     total = total - total * this.state.invoice.discount / 100;
     axios
-      .put("http://localhost:8800/api/invoices/" + this.id, {
+      .put("/api/invoices/" + this.id, {
         total: total
       })
       .then(results => {
@@ -169,7 +169,7 @@ class Invoice extends Component {
   handleAddClick() {
     axios
       .post(
-        "http://localhost:8800/api/invoices/" +
+        "/api/invoices/" +
           this.state.invoice.id +
           "/items/",
         {
@@ -186,7 +186,7 @@ class Invoice extends Component {
   componentWillMount() {
     if (this.id !== 0) {
       axios
-        .get("http://localhost:8800/api/invoices/" + this.id)
+        .get("/api/invoices/" + this.id)
         .then(results => {
           this.setState({
             invoice: Object.assign(results.data, {
@@ -204,7 +204,7 @@ class Invoice extends Component {
         : 0;
     axios
       .put(
-        "http://localhost:8800/api/invoices/" +
+        "/api/invoices/" +
           this.id +
           "/items/" +
           event.target.attributes.item_id.value,

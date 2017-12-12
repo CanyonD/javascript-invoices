@@ -7,12 +7,9 @@ const customButtonStyle = {
 };
 
 let model = [
-  { name: "ID", prop: "id" },
   { name: "Name", prop: "name" },
   { name: "Address", prop: "address" },
-  { name: "Phone", prop: "phone" },
-  { name: "Added", prop: "createdAt" },
-  { name: "Updated", prop: "updatedAt" }
+  { name: "Phone", prop: "phone" }
 ];
 
 class Customers extends Component {
@@ -29,20 +26,18 @@ class Customers extends Component {
   }
 
   handleEdit(params) {
-    window.location.href = "/customer/" + params.id;
+    window.location.href = "/customer/" + params._id;
   }
 
   handleRemove(params) {
-    axios
-      .delete("http://localhost:8800/api/customers/" + params.id)
-      .then(results => {
-        this.componentDidMount();
-      });
+    axios.delete("/api/customers/" + params.id).then(results => {
+      this.componentDidMount();
+    });
   }
 
   handleAdd(params) {
     axios
-      .post("http://localhost:8800/api/customers/", {
+      .post("/api/customers/", {
         name: "",
         address: "",
         phone: ""
@@ -54,7 +49,7 @@ class Customers extends Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:8800/api/customers").then(results => {
+    axios.get("/api/customers").then(results => {
       this.setState({
         customers: results.data
       });

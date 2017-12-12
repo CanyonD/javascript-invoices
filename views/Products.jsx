@@ -6,13 +6,7 @@ const customButtonStyle = {
   margin: "0"
 };
 
-let model = [
-  { name: "ID", prop: "id" },
-  { name: "Name", prop: "name" },
-  { name: "Price", prop: "price" },
-  { name: "Added", prop: "createdAt" },
-  { name: "Updated", prop: "updatedAt" }
-];
+let model = [{ name: "Name", prop: "name" }, { name: "Price", prop: "price" }];
 
 class Products extends Component {
   constructor(props) {
@@ -28,31 +22,29 @@ class Products extends Component {
   }
 
   handleEdit(params) {
-    window.location.href = "/product/" + params.id;
+    window.location.href = "/product/" + params._id;
   }
 
   handleAdd(params) {
     axios
-      .post("http://localhost:8800/api/products/", {
+      .post("/api/products/", {
         name: "",
         price: 0
       })
       .then(results => {
         let res = results.data;
-        this.props.history.push("/product/" + res.id);
+        this.props.history.push("/product/" + res._id);
       });
   }
 
   handleRemove(params) {
-    axios
-      .delete("http://localhost:8800/api/products/" + params.id)
-      .then(results => {
-        this.componentDidMount();
-      });
+    axios.delete("/api/products/" + params.id).then(results => {
+      this.componentDidMount();
+    });
   }
 
   componentDidMount() {
-    axios.get("http://localhost:8800/api/products").then(results => {
+    axios.get("/api/products").then(results => {
       this.setState({
         products_list: results.data
       });

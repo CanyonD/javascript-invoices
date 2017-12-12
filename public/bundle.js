@@ -21887,14 +21887,6 @@
 
 	var _reactRouter = __webpack_require__(185);
 
-	var _MuiThemeProvider = __webpack_require__(459);
-
-	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
-
-	var _getMuiTheme = __webpack_require__(460);
-
-	var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
-
 	var _Layout = __webpack_require__(248);
 
 	var _Layout2 = _interopRequireDefault(_Layout);
@@ -21925,25 +21917,19 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var muiTheme = (0, _getMuiTheme2.default)({ userAgent: false });
-
 	module.exports = _react2.default.createElement(
 	  _reactRouter.Router,
 	  { history: _reactRouter.browserHistory },
 	  _react2.default.createElement(
-	    _MuiThemeProvider2.default,
-	    { muiTheme: muiTheme },
-	    _react2.default.createElement(
-	      _reactRouter.Route,
-	      { path: "/", component: _Layout2.default },
-	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _Invoices2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: "customers", component: _Customers2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: "customer/:id", component: _Customer2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: "products", component: _Products2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: "product/:id", component: _Product2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: "invoices", component: _Invoices2.default }),
-	      _react2.default.createElement(_reactRouter.Route, { path: "invoice/:id", component: _Invoices2.default })
-	    )
+	    _reactRouter.Route,
+	    { path: "/", component: _Layout2.default },
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _Invoices2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "customers", component: _Customers2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "customer/:id", component: _Customer2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "products", component: _Products2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "product/:id", component: _Product2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "invoices", component: _Invoices2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: "invoice/:id", component: _Invoices2.default })
 	  )
 	);
 
@@ -27660,8 +27646,8 @@
 	            custom.title
 	          ),
 	          _react2.default.createElement("link", { rel: "stylesheet", href: "/style.css" }),
-	          _react2.default.createElement("link", { rel: "stylesheet", href: "bootstrap/css/bootstrap.css" }),
-	          _react2.default.createElement("link", { rel: "stylesheet", href: "bootstrap/css/bootstrap-theme.css" })
+	          _react2.default.createElement("link", { rel: "stylesheet", href: "/bootstrap/css/bootstrap.css" }),
+	          _react2.default.createElement("link", { rel: "stylesheet", href: "/bootstrap/css/bootstrap-theme.css" })
 	        ),
 	        _react2.default.createElement(
 	          "body",
@@ -27733,8 +27719,8 @@
 	              __html: "window.PROPS=" + JSON.stringify(custom)
 	            }
 	          }),
-	          _react2.default.createElement("script", { src: "js/lib/jquery/jquery-2.0.3.min.js" }),
-	          _react2.default.createElement("script", { src: "bootstrap/js/bootstrap.js" }),
+	          _react2.default.createElement("script", { src: "/js/lib/jquery/jquery-2.0.3.min.js" }),
+	          _react2.default.createElement("script", { src: "/bootstrap/js/bootstrap.js" }),
 	          _react2.default.createElement("script", { src: "/bundle.js" })
 	        )
 	      );
@@ -29545,7 +29531,7 @@
 	      }]
 	    };
 
-	    _axios2.default.get("http://localhost:8800/api/customers").then(function (results) {
+	    _axios2.default.get("/api/customers").then(function (results) {
 	      _this.setState({
 	        customers: results.data
 	      });
@@ -29569,7 +29555,7 @@
 	    value: function handleRemove(params) {
 	      var _this2 = this;
 
-	      _axios2.default.delete("http://localhost:8800/api/invoices/" + params.id).then(function (results) {
+	      _axios2.default.delete("/api/invoices/" + params.id).then(function (results) {
 	        _this2.componentDidMount();
 	      });
 	    }
@@ -29578,7 +29564,7 @@
 	    value: function componentDidMount() {
 	      var _this3 = this;
 
-	      _axios2.default.get("http://localhost:8800/api/invoices").then(function (results) {
+	      _axios2.default.get("/api/invoices").then(function (results) {
 	        var res = results.data;
 	        if (res.length === 0) _this3.setState({
 	          invoices: []
@@ -29606,7 +29592,7 @@
 	    value: function handleAddInvoice(params) {
 	      var _this4 = this;
 
-	      _axios2.default.post("http://localhost:8800/api/invoices/", {
+	      _axios2.default.post("/api/invoices/", {
 	        customer_id: 0,
 	        total: 0,
 	        discount: 0
@@ -31252,7 +31238,7 @@
 	  margin: "0"
 	};
 
-	var model = [{ name: "ID", prop: "id" }, { name: "Name", prop: "name" }, { name: "Address", prop: "address" }, { name: "Phone", prop: "phone" }, { name: "Added", prop: "createdAt" }, { name: "Updated", prop: "updatedAt" }];
+	var model = [{ name: "Name", prop: "name" }, { name: "Address", prop: "address" }, { name: "Phone", prop: "phone" }];
 
 	var Customers = function (_Component) {
 	  _inherits(Customers, _Component);
@@ -31276,14 +31262,14 @@
 	  _createClass(Customers, [{
 	    key: "handleEdit",
 	    value: function handleEdit(params) {
-	      window.location.href = "/customer/" + params.id;
+	      window.location.href = "/customer/" + params._id;
 	    }
 	  }, {
 	    key: "handleRemove",
 	    value: function handleRemove(params) {
 	      var _this2 = this;
 
-	      _axios2.default.delete("http://localhost:8800/api/customers/" + params.id).then(function (results) {
+	      _axios2.default.delete("/api/customers/" + params.id).then(function (results) {
 	        _this2.componentDidMount();
 	      });
 	    }
@@ -31292,7 +31278,7 @@
 	    value: function handleAdd(params) {
 	      var _this3 = this;
 
-	      _axios2.default.post("http://localhost:8800/api/customers/", {
+	      _axios2.default.post("/api/customers/", {
 	        name: "",
 	        address: "",
 	        phone: ""
@@ -31306,7 +31292,7 @@
 	    value: function componentDidMount() {
 	      var _this4 = this;
 
-	      _axios2.default.get("http://localhost:8800/api/customers").then(function (results) {
+	      _axios2.default.get("/api/customers").then(function (results) {
 	        _this4.setState({
 	          customers: results.data
 	        });
@@ -31403,7 +31389,7 @@
 	  margin: "0"
 	};
 
-	var model = [{ name: "ID", prop: "id" }, { name: "Name", prop: "name" }, { name: "Price", prop: "price" }, { name: "Added", prop: "createdAt" }, { name: "Updated", prop: "updatedAt" }];
+	var model = [{ name: "Name", prop: "name" }, { name: "Price", prop: "price" }];
 
 	var Products = function (_Component) {
 	  _inherits(Products, _Component);
@@ -31427,19 +31413,19 @@
 	  _createClass(Products, [{
 	    key: "handleEdit",
 	    value: function handleEdit(params) {
-	      window.location.href = "/product/" + params.id;
+	      window.location.href = "/product/" + params._id;
 	    }
 	  }, {
 	    key: "handleAdd",
 	    value: function handleAdd(params) {
 	      var _this2 = this;
 
-	      _axios2.default.post("http://localhost:8800/api/products/", {
+	      _axios2.default.post("/api/products/", {
 	        name: "",
 	        price: 0
 	      }).then(function (results) {
 	        var res = results.data;
-	        _this2.props.history.push("/product/" + res.id);
+	        _this2.props.history.push("/product/" + res._id);
 	      });
 	    }
 	  }, {
@@ -31447,7 +31433,7 @@
 	    value: function handleRemove(params) {
 	      var _this3 = this;
 
-	      _axios2.default.delete("http://localhost:8800/api/products/" + params.id).then(function (results) {
+	      _axios2.default.delete("/api/products/" + params.id).then(function (results) {
 	        _this3.componentDidMount();
 	      });
 	    }
@@ -31456,7 +31442,7 @@
 	    value: function componentDidMount() {
 	      var _this4 = this;
 
-	      _axios2.default.get("http://localhost:8800/api/products").then(function (results) {
+	      _axios2.default.get("/api/products").then(function (results) {
 	        _this4.setState({
 	          products_list: results.data
 	        });
@@ -31566,7 +31552,7 @@
 	    _Table.TableRow,
 	    { key: "tr-" + i },
 	    header.map(function (y, k) {
-	      return y.prop === "id" ? _react2.default.createElement(
+	      return y.prop === "_id" ? _react2.default.createElement(
 	        _Table.TableRowColumn,
 	        { style: { width: 60 }, key: "trc-" + k },
 	        x[y.prop]
@@ -45208,13 +45194,13 @@
 	      customers: []
 	    };
 
-	    _axios2.default.get("http://localhost:8800/api/products").then(function (results) {
+	    _axios2.default.get("/api/products").then(function (results) {
 	      _this.setState({
 	        products: results.data
 	      });
 	    });
 
-	    _axios2.default.get("http://localhost:8800/api/customers").then(function (results) {
+	    _axios2.default.get("/api/customers").then(function (results) {
 	      _this.setState({
 	        customers: results.data
 	      });
@@ -45239,11 +45225,11 @@
 	    value: function componentDidMount(callback) {
 	      var _this2 = this;
 
-	      _axios2.default.get("http://localhost:8800/api/invoices/" + this.id + "/items/").then(function (results) {
+	      _axios2.default.get("/api/invoices/" + this.id + "/items/").then(function (results) {
 	        var res = results.data;
 	        results.data.map(function (x, y) {
 	          if (x.product_id !== 0) {
-	            _axios2.default.get("http://localhost:8800/api/products/" + x.product_id).then(function (results) {
+	            _axios2.default.get("/api/products/" + x.product_id).then(function (results) {
 	              if (results.data === null) res[y].items = [];else {
 	                res[y].price = results.data.price;
 	                res[y].product_id = results.data.id;
@@ -45278,7 +45264,7 @@
 	      });
 	      var calc_total = total - total * value / 100;
 
-	      _axios2.default.put("http://localhost:8800/api/invoices/" + this.id, {
+	      _axios2.default.put("/api/invoices/" + this.id, {
 	        discount: value,
 	        total: calc_total
 	      }).then(function (results) {
@@ -45290,7 +45276,7 @@
 	    value: function handleRemoveClick(event) {
 	      var _this4 = this;
 
-	      _axios2.default.delete("http://localhost:8800/api/invoices/" + this.id + "/items/" + event.id).then(function (results) {
+	      _axios2.default.delete("/api/invoices/" + this.id + "/items/" + event.id).then(function (results) {
 	        _this4.componentDidMount();
 	      });
 	    }
@@ -45300,7 +45286,7 @@
 	      var _this5 = this;
 
 	      var value = event.target.value;
-	      _axios2.default.put("http://localhost:8800/api/invoices/" + this.id + "/items/" + event.target.attributes.item_id.value, {
+	      _axios2.default.put("/api/invoices/" + this.id + "/items/" + event.target.attributes.item_id.value, {
 	        product_id: value
 	      }).then(function (results) {
 	        _this5.componentDidMount(true);
@@ -45312,7 +45298,7 @@
 	    value: function handleChangeCustomer(event) {
 	      var _this6 = this;
 
-	      _axios2.default.put("http://localhost:8800/api/invoices/" + this.id, {
+	      _axios2.default.put("/api/invoices/" + this.id, {
 	        customer_id: event.target.value
 	      }).then(function (results) {
 	        _this6.componentWillMount();
@@ -45330,7 +45316,7 @@
 	        return x;
 	      });
 	      total = total - total * this.state.invoice.discount / 100;
-	      _axios2.default.put("http://localhost:8800/api/invoices/" + this.id, {
+	      _axios2.default.put("/api/invoices/" + this.id, {
 	        total: total
 	      }).then(function (results) {
 	        _this7.setState({
@@ -45345,7 +45331,7 @@
 	    value: function handleAddClick() {
 	      var _this8 = this;
 
-	      _axios2.default.post("http://localhost:8800/api/invoices/" + this.state.invoice.id + "/items/", {
+	      _axios2.default.post("/api/invoices/" + this.state.invoice.id + "/items/", {
 	        invoice_id: this.state.invoice.id,
 	        product_id: 0,
 	        quantity: 0
@@ -45359,7 +45345,7 @@
 	      var _this9 = this;
 
 	      if (this.id !== 0) {
-	        _axios2.default.get("http://localhost:8800/api/invoices/" + this.id).then(function (results) {
+	        _axios2.default.get("/api/invoices/" + this.id).then(function (results) {
 	          _this9.setState({
 	            invoice: Object.assign(results.data, {
 	              items: _this9.state.invoice.items
@@ -45374,7 +45360,7 @@
 	      var _this10 = this;
 
 	      var value = event.target.value !== "" && !isNaN(parseInt(event.target.value, 10)) ? parseInt(event.target.value, 10) : 0;
-	      _axios2.default.put("http://localhost:8800/api/invoices/" + this.id + "/items/" + event.target.attributes.item_id.value, {
+	      _axios2.default.put("/api/invoices/" + this.id + "/items/" + event.target.attributes.item_id.value, {
 	        quantity: value
 	      }).then(function (results) {
 	        _this10.componentDidMount();
@@ -46721,6 +46707,14 @@
 
 	var _arrowBack2 = _interopRequireDefault(_arrowBack);
 
+	var _MuiThemeProvider = __webpack_require__(459);
+
+	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
+
+	var _getMuiTheme = __webpack_require__(460);
+
+	var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46728,6 +46722,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var muiTheme = (0, _getMuiTheme2.default)({ userAgent: false });
 
 	var Customer = function (_Component) {
 	  _inherits(Customer, _Component);
@@ -46750,7 +46746,7 @@
 	    _this.handleChangeAddress = _this.handleChangeAddress.bind(_this);
 	    _this.handleChangePhone = _this.handleChangePhone.bind(_this);
 
-	    _this.id = _this.props !== undefined && _this.props.match !== undefined && _this.props.match.params !== undefined && _this.props.match.params.id !== undefined ? parseInt(_this.props.match.params.id, 10) : 0;
+	    _this.id = _this.props !== undefined && _this.props.params !== undefined && _this.props.params.id !== undefined ? _this.props.params.id : 0;
 	    return _this;
 	  }
 
@@ -46759,7 +46755,7 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
-	      _axios2.default.get("http://localhost:8800/api/customers/" + this.props.match.params.id).then(function (results) {
+	      _axios2.default.get("/api/customers/" + this.id).then(function (results) {
 	        _this2.setState({
 	          customer: results.data
 	        });
@@ -46770,7 +46766,7 @@
 	    value: function handleChangeAddress(event) {
 	      var _this3 = this;
 
-	      _axios2.default.put("http://localhost:8800/api/customers/" + this.id, {
+	      _axios2.default.put("/api/customers/" + this.id, {
 	        address: event.target.value
 	      }).then(function (results) {
 	        _this3.componentDidMount();
@@ -46781,7 +46777,7 @@
 	    value: function handleChangePhone(event) {
 	      var _this4 = this;
 
-	      _axios2.default.put("http://localhost:8800/api/customers/" + this.id, {
+	      _axios2.default.put("/api/customers/" + this.id, {
 	        phone: event.target.value
 	      }).then(function (results) {
 	        _this4.componentDidMount();
@@ -46792,7 +46788,7 @@
 	    value: function handleChangeName(event) {
 	      var _this5 = this;
 
-	      _axios2.default.put("http://localhost:8800/api/customers/" + this.id, {
+	      _axios2.default.put("/api/customers/" + this.id, {
 	        name: event.target.value
 	      }).then(function (results) {
 	        _this5.componentDidMount();
@@ -46801,99 +46797,100 @@
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this6 = this;
-
 	      return _react2.default.createElement(
-	        "div",
-	        null,
+	        _MuiThemeProvider2.default,
+	        { muiTheme: muiTheme },
 	        _react2.default.createElement(
 	          "div",
 	          null,
 	          _react2.default.createElement(
-	            "fieldset",
+	            "div",
 	            null,
 	            _react2.default.createElement(
-	              "legend",
+	              "fieldset",
 	              null,
 	              _react2.default.createElement(
-	                _IconButton2.default,
-	                {
-	                  className: "col-md-4 control-label ",
-	                  tooltip: "Back to list",
-	                  onClick: function onClick() {
-	                    _this6.props.history.push("/customers");
-	                  }
-	                },
-	                _react2.default.createElement(_arrowBack2.default, null)
-	              ),
-	              _react2.default.createElement(
-	                "div",
-	                { className: "col-md-3 control-label" },
-	                "Edit Product # ",
-	                this.props.match.params.id
-	              )
-	            ),
-	            _react2.default.createElement(
-	              "form",
-	              { className: "form-horizontal" },
-	              _react2.default.createElement(
-	                "div",
-	                { className: "form-group" },
+	                "legend",
+	                null,
 	                _react2.default.createElement(
-	                  "label",
-	                  { className: "control-label col-sm-1" },
-	                  "Name"
+	                  _IconButton2.default,
+	                  {
+	                    className: "col-md-4 control-label ",
+	                    tooltip: "Back to list",
+	                    onClick: function onClick() {
+	                      window.location.href = "/customers/";
+	                    }
+	                  },
+	                  _react2.default.createElement(_arrowBack2.default, null)
 	                ),
 	                _react2.default.createElement(
 	                  "div",
-	                  { className: "col-md-5" },
-	                  _react2.default.createElement("input", {
-	                    type: "text",
-	                    placeholder: "",
-	                    className: "form-control input-md input-name",
-	                    value: this.state.customer.name,
-	                    onChange: this.handleChangeName
-	                  })
+	                  { className: "col-md-3 control-label" },
+	                  "Edit Customer"
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "div",
-	                { className: "form-group" },
+	                "form",
+	                { className: "form-horizontal" },
 	                _react2.default.createElement(
-	                  "label",
-	                  { className: "control-label col-sm-1" },
-	                  "Address"
+	                  "div",
+	                  { className: "form-group" },
+	                  _react2.default.createElement(
+	                    "label",
+	                    { className: "control-label col-sm-1" },
+	                    "Name"
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "col-md-5" },
+	                    _react2.default.createElement("input", {
+	                      type: "text",
+	                      placeholder: "",
+	                      className: "form-control input-md input-name",
+	                      value: this.state.customer.name,
+	                      onChange: this.handleChangeName
+	                    })
+	                  )
 	                ),
 	                _react2.default.createElement(
 	                  "div",
-	                  { className: "col-md-5" },
-	                  _react2.default.createElement("input", {
-	                    type: "text",
-	                    placeholder: "",
-	                    className: "form-control input-md input-price",
-	                    value: this.state.customer.address,
-	                    onChange: this.handleChangeAddress
-	                  })
-	                )
-	              ),
-	              _react2.default.createElement(
-	                "div",
-	                { className: "form-group" },
-	                _react2.default.createElement(
-	                  "label",
-	                  { className: "control-label col-sm-1" },
-	                  "Phone"
+	                  { className: "form-group" },
+	                  _react2.default.createElement(
+	                    "label",
+	                    { className: "control-label col-sm-1" },
+	                    "Address"
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "col-md-5" },
+	                    _react2.default.createElement("input", {
+	                      type: "text",
+	                      placeholder: "",
+	                      className: "form-control input-md input-price",
+	                      value: this.state.customer.address,
+	                      onChange: this.handleChangeAddress
+	                    })
+	                  )
 	                ),
 	                _react2.default.createElement(
 	                  "div",
-	                  { className: "col-md-5" },
-	                  _react2.default.createElement("input", {
-	                    type: "text",
-	                    placeholder: "",
-	                    className: "form-control input-md input-price",
-	                    value: this.state.customer.phone,
-	                    onChange: this.handleChangePhone
-	                  })
+	                  { className: "form-group" },
+	                  _react2.default.createElement(
+	                    "label",
+	                    { className: "control-label col-sm-1" },
+	                    "Phone"
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "col-md-5" },
+	                    _react2.default.createElement("input", {
+	                      type: "text",
+	                      placeholder: "",
+	                      className: "form-control input-md input-price",
+	                      value: this.state.customer.phone,
+	                      onChange: this.handleChangePhone
+	                    })
+	                  )
 	                )
 	              )
 	            )
@@ -46936,6 +46933,14 @@
 
 	var _arrowBack2 = _interopRequireDefault(_arrowBack);
 
+	var _MuiThemeProvider = __webpack_require__(459);
+
+	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
+
+	var _getMuiTheme = __webpack_require__(460);
+
+	var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -46943,6 +46948,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var muiTheme = (0, _getMuiTheme2.default)({ userAgent: false });
 
 	var Product = function (_Component) {
 	  _inherits(Product, _Component);
@@ -46954,16 +46961,15 @@
 
 	    _this.state = {
 	      product: {
-	        name: 0,
+	        name: "",
 	        price: 0
 	      }
 	    };
-	    // this.render = this.render.bind(this);
 	    _this.componentDidMount = _this.componentDidMount.bind(_this);
 	    _this.handleChangeName = _this.handleChangeName.bind(_this);
 	    _this.handleChangePrice = _this.handleChangePrice.bind(_this);
 
-	    _this.id = _this.props !== undefined && _this.props.match !== undefined && _this.props.match.params !== undefined && _this.props.match.params.id !== undefined ? parseInt(_this.props.match.params.id, 10) : 0;
+	    _this.id = _this.props !== undefined && _this.props.params !== undefined && _this.props.params.id !== undefined ? _this.props.params.id : 0;
 	    return _this;
 	  }
 
@@ -46972,7 +46978,7 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
-	      _axios2.default.get("http://localhost:8800/api/products/" + this.props.match.params.id).then(function (results) {
+	      _axios2.default.get("/api/products/" + this.id).then(function (results) {
 	        _this2.setState({
 	          product: results.data
 	        });
@@ -46984,7 +46990,7 @@
 	      var _this3 = this;
 
 	      var value = event.target.value !== "" && !isNaN(parseInt(event.target.value, 10)) ? parseInt(event.target.value, 10) : 0;
-	      _axios2.default.put("http://localhost:8800/api/products/" + this.id, {
+	      _axios2.default.put("/api/products/" + this._id, {
 	        price: value
 	      }).then(function (results) {
 	        _this3.componentDidMount();
@@ -46995,7 +47001,7 @@
 	    value: function handleChangeName(event) {
 	      var _this4 = this;
 
-	      _axios2.default.put("http://localhost:8800/api/products/" + this.id, {
+	      _axios2.default.put("/api/products/" + this._id, {
 	        name: event.target.value
 	      }).then(function (results) {
 	        _this4.componentDidMount();
@@ -47004,79 +47010,80 @@
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this5 = this;
-
 	      return _react2.default.createElement(
-	        "div",
-	        null,
+	        _MuiThemeProvider2.default,
+	        { muiTheme: muiTheme },
 	        _react2.default.createElement(
 	          "div",
 	          null,
 	          _react2.default.createElement(
-	            "fieldset",
+	            "div",
 	            null,
 	            _react2.default.createElement(
-	              "legend",
+	              "fieldset",
 	              null,
 	              _react2.default.createElement(
-	                _IconButton2.default,
-	                {
-	                  className: "col-md-4 control-label ",
-	                  tooltip: "Back to list",
-	                  onClick: function onClick() {
-	                    _this5.props.history.push("/products");
-	                  }
-	                },
-	                _react2.default.createElement(_arrowBack2.default, null)
-	              ),
-	              _react2.default.createElement(
-	                "div",
-	                { className: "col-md-3 control-label" },
-	                "Edit Product # ",
-	                this.props.match.params.id
-	              )
-	            ),
-	            _react2.default.createElement(
-	              "form",
-	              { className: "form-horizontal" },
-	              _react2.default.createElement(
-	                "div",
-	                { className: "form-group" },
+	                "legend",
+	                null,
 	                _react2.default.createElement(
-	                  "label",
-	                  { className: "control-label col-sm-1" },
-	                  "Name"
+	                  _IconButton2.default,
+	                  {
+	                    className: "col-md-4 control-label ",
+	                    tooltip: "Back to list",
+	                    onClick: function onClick() {
+	                      window.location.href = "/products";
+	                    }
+	                  },
+	                  _react2.default.createElement(_arrowBack2.default, null)
 	                ),
 	                _react2.default.createElement(
 	                  "div",
-	                  { className: "col-md-2" },
-	                  _react2.default.createElement("input", {
-	                    type: "text",
-	                    placeholder: "",
-	                    className: "form-control input-md input-name",
-	                    value: this.state.product.name,
-	                    onChange: this.handleChangeName
-	                  })
+	                  { className: "col-md-3 control-label" },
+	                  "Edit Product"
 	                )
 	              ),
 	              _react2.default.createElement(
-	                "div",
-	                { className: "form-group" },
+	                "form",
+	                { className: "form-horizontal" },
 	                _react2.default.createElement(
-	                  "label",
-	                  { className: "control-label col-sm-1" },
-	                  "Price"
+	                  "div",
+	                  { className: "form-group" },
+	                  _react2.default.createElement(
+	                    "label",
+	                    { className: "control-label col-sm-1" },
+	                    "Name"
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "col-md-2" },
+	                    _react2.default.createElement("input", {
+	                      type: "text",
+	                      placeholder: "",
+	                      className: "form-control input-md input-name",
+	                      value: this.state.product.name,
+	                      onChange: this.handleChangeName
+	                    })
+	                  )
 	                ),
 	                _react2.default.createElement(
 	                  "div",
-	                  { className: "col-md-2" },
-	                  _react2.default.createElement("input", {
-	                    type: "text",
-	                    placeholder: "",
-	                    className: "form-control input-md input-price",
-	                    value: this.state.product.price,
-	                    onChange: this.handleChangePrice
-	                  })
+	                  { className: "form-group" },
+	                  _react2.default.createElement(
+	                    "label",
+	                    { className: "control-label col-sm-1" },
+	                    "Price"
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "col-md-2" },
+	                    _react2.default.createElement("input", {
+	                      type: "text",
+	                      placeholder: "",
+	                      className: "form-control input-md input-price",
+	                      value: this.state.product.price,
+	                      onChange: this.handleChangePrice
+	                    })
+	                  )
 	                )
 	              )
 	            )

@@ -28,7 +28,7 @@ class Invoices extends Component {
       ]
     };
 
-    axios.get("http://localhost:8800/api/customers").then(results => {
+    axios.get("/api/customers").then(results => {
       this.setState({
         customers: results.data
       });
@@ -47,14 +47,14 @@ class Invoices extends Component {
 
   handleRemove(params) {
     axios
-      .delete("http://localhost:8800/api/invoices/" + params.id)
+      .delete("/api/invoices/" + params.id)
       .then(results => {
         this.componentDidMount();
       });
   }
 
   componentDidMount() {
-    axios.get("http://localhost:8800/api/invoices").then(results => {
+    axios.get("/api/invoices").then(results => {
       let res = results.data;
       if (res.length === 0)
         this.setState({
@@ -81,7 +81,7 @@ class Invoices extends Component {
 
   handleAddInvoice(params) {
     axios
-      .post("http://localhost:8800/api/invoices/", {
+      .post("/api/invoices/", {
         customer_id: 0,
         total: 0,
         discount: 0

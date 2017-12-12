@@ -20,7 +20,7 @@ function row(x, i, header, handleEdit, handleRemove) {
     <TableRow key={`tr-${i}`}>
       {header.map(
         (y, k) =>
-          y.prop === "id" ? (
+          y.prop === "_id" ? (
             <TableRowColumn style={{ width: 60 }} key={`trc-${k}`}>
               {x[y.prop]}
             </TableRowColumn>

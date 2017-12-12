@@ -20,8 +20,8 @@ class Layout extends React.Component {
           <link rel="shortcut icon" href="/favicon.ico" />
           <title>{custom.title}</title>
           <link rel="stylesheet" href="/style.css" />
-          <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
-          <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.css" />
+          <link rel="stylesheet" href="/bootstrap/css/bootstrap.css" />
+          <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.css" />
         </head>
         <body>
           <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -55,8 +55,8 @@ class Layout extends React.Component {
               __html: "window.PROPS=" + JSON.stringify(custom)
             }}
           />
-          <script src="js/lib/jquery/jquery-2.0.3.min.js" />
-          <script src="bootstrap/js/bootstrap.js" />
+          <script src="/js/lib/jquery/jquery-2.0.3.min.js" />
+          <script src="/bootstrap/js/bootstrap.js" />
           <script src="/bundle.js" />
         </body>
       </html>
