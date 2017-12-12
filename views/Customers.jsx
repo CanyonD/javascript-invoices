@@ -30,7 +30,7 @@ class Customers extends Component {
   }
 
   handleRemove(params) {
-    axios.delete("/api/customers/" + params.id).then(results => {
+    axios.delete("/api/customers/" + params._id).then(results => {
       this.componentDidMount();
     });
   }
@@ -44,7 +44,7 @@ class Customers extends Component {
       })
       .then(results => {
         let res = results.data;
-        this.props.history.push("/customer/" + res.id);
+        window.location.href = "/customer/" + res._id;
       });
   }
 

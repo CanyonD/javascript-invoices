@@ -7,14 +7,14 @@ module.exports = app => {
   app.get("/api/customers", customersController.all);
   app.post("/api/customers", customersController.add);
   app.get("/api/customers/:customer_id", customersController.findById);
-  app.put("/api/customers/:customer_id", customersController.changeById);
+  app.put("/api/customers/:customer_id", customersController.updateById);
   app.delete("/api/customers/:customer_id", customersController.removeById);
 
   // PRODUCTS API
   app.get("/api/products", productsController.all);
   app.post("/api/products", productsController.add);
   app.get("/api/products/:product_id", productsController.findById);
-  app.put("/api/products/:product_id", productsController.changeById);
+  app.put("/api/products/:product_id", productsController.updateById);
   app.delete("/api/products/:product_id", productsController.removeById);
 
   // INVOICES API

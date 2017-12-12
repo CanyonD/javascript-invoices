@@ -31269,31 +31269,29 @@
 	    value: function handleRemove(params) {
 	      var _this2 = this;
 
-	      _axios2.default.delete("/api/customers/" + params.id).then(function (results) {
+	      _axios2.default.delete("/api/customers/" + params._id).then(function (results) {
 	        _this2.componentDidMount();
 	      });
 	    }
 	  }, {
 	    key: "handleAdd",
 	    value: function handleAdd(params) {
-	      var _this3 = this;
-
 	      _axios2.default.post("/api/customers/", {
 	        name: "",
 	        address: "",
 	        phone: ""
 	      }).then(function (results) {
 	        var res = results.data;
-	        _this3.props.history.push("/customer/" + res.id);
+	        window.location.href = "/customer/" + res._id;
 	      });
 	    }
 	  }, {
 	    key: "componentDidMount",
 	    value: function componentDidMount() {
-	      var _this4 = this;
+	      var _this3 = this;
 
 	      _axios2.default.get("/api/customers").then(function (results) {
-	        _this4.setState({
+	        _this3.setState({
 	          customers: results.data
 	        });
 	      });
@@ -31418,32 +31416,30 @@
 	  }, {
 	    key: "handleAdd",
 	    value: function handleAdd(params) {
-	      var _this2 = this;
-
 	      _axios2.default.post("/api/products/", {
 	        name: "",
 	        price: 0
 	      }).then(function (results) {
 	        var res = results.data;
-	        _this2.props.history.push("/product/" + res._id);
+	        window.location.href = "/product/" + res._id;
 	      });
 	    }
 	  }, {
 	    key: "handleRemove",
 	    value: function handleRemove(params) {
-	      var _this3 = this;
+	      var _this2 = this;
 
-	      _axios2.default.delete("/api/products/" + params.id).then(function (results) {
-	        _this3.componentDidMount();
+	      _axios2.default.delete("/api/products/" + params._id).then(function (results) {
+	        _this2.componentDidMount();
 	      });
 	    }
 	  }, {
 	    key: "componentDidMount",
 	    value: function componentDidMount() {
-	      var _this4 = this;
+	      var _this3 = this;
 
 	      _axios2.default.get("/api/products").then(function (results) {
-	        _this4.setState({
+	        _this3.setState({
 	          products_list: results.data
 	        });
 	      });
@@ -46990,7 +46986,7 @@
 	      var _this3 = this;
 
 	      var value = event.target.value !== "" && !isNaN(parseInt(event.target.value, 10)) ? parseInt(event.target.value, 10) : 0;
-	      _axios2.default.put("/api/products/" + this._id, {
+	      _axios2.default.put("/api/products/" + this.id, {
 	        price: value
 	      }).then(function (results) {
 	        _this3.componentDidMount();
@@ -47001,7 +46997,7 @@
 	    value: function handleChangeName(event) {
 	      var _this4 = this;
 
-	      _axios2.default.put("/api/products/" + this._id, {
+	      _axios2.default.put("/api/products/" + this.id, {
 	        name: event.target.value
 	      }).then(function (results) {
 	        _this4.componentDidMount();

@@ -33,12 +33,12 @@ class Products extends Component {
       })
       .then(results => {
         let res = results.data;
-        this.props.history.push("/product/" + res._id);
+        window.location.href = "/product/" + res._id;
       });
   }
 
   handleRemove(params) {
-    axios.delete("/api/products/" + params.id).then(results => {
+    axios.delete("/api/products/" + params._id).then(results => {
       this.componentDidMount();
     });
   }

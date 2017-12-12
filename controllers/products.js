@@ -10,7 +10,16 @@ exports.all = (req, res) => {
 };
 
 exports.add = (req, res) => {
-  res.send("add products");
+  let product = {
+    name: req.body.name,
+    price: req.body.price
+  };
+  Products.addNew(product, function(err, doc) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+    res.send(doc.ops[0]);
+  });
 };
 
 exports.findById = (req, res) => {
@@ -22,10 +31,21 @@ exports.findById = (req, res) => {
   });
 };
 
-exports.changeById = (req, res) => {
-  res.send("changeById products");
+exports.updateById = (req, res) => {
+  Products.update(req.params.product_id, req.body, function(err, doc) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+    res.send(doc);
+  });
 };
 
 exports.removeById = (req, res) => {
-  res.send("removeById products");
+  Products.removeById(req.params.product_id, function(err, result) {
+    if (err) {
+      log.error(err);
+      return res.sendStatus(500);
+    }
+    res.sendStatus(200);
+  });
 };

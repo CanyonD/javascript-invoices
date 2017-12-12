@@ -10,7 +10,17 @@ exports.all = (req, res) => {
 };
 
 exports.add = (req, res) => {
-  res.send("add customers");
+  let customer = {
+    name: req.body.name,
+    address: req.body.address,
+    phone: req.body.phone
+  };
+  Customers.addNew(customer, function(err, doc) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+    res.send(doc.ops[0]);
+  });
 };
 
 exports.findById = (req, res) => {
@@ -22,10 +32,21 @@ exports.findById = (req, res) => {
   });
 };
 
-exports.changeById = (req, res) => {
-  res.send("changeById customers");
+exports.removeById = (req, res) => {
+  Customers.removeById(req.params.customer_id, function(err, result) {
+    if (err) {
+      log.error(err);
+      return res.sendStatus(500);
+    }
+    res.sendStatus(200);
+  });
 };
 
-exports.removeById = (req, res) => {
-  res.send("removeById customers");
+exports.updateById = (req, res) => {
+  Customers.update(req.params.customer_id, req.body, function(err, doc) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+    res.send(doc);
+  });
 };

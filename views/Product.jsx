@@ -43,7 +43,7 @@ class Product extends Component {
         ? parseInt(event.target.value, 10)
         : 0;
     axios
-      .put("/api/products/" + this._id, {
+      .put("/api/products/" + this.id, {
         price: value
       })
       .then(results => {
@@ -53,7 +53,7 @@ class Product extends Component {
 
   handleChangeName(event) {
     axios
-      .put("/api/products/" + this._id, {
+      .put("/api/products/" + this.id, {
         name: event.target.value
       })
       .then(results => {
