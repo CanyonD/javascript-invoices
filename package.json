@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/CanyonD/javascript-invoices#readme",
   "dependencies": {
+    "axios": "^0.17.1",
     "babel-core": "^6.9.0",
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.24.0",
@@ -29,6 +30,7 @@
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "express": "^4.13.4",
+    "material-ui": "^0.20.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.6",

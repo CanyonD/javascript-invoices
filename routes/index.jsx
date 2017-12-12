@@ -5,9 +5,14 @@ var ReactRouter = require("react-router");
 var Redux = require("redux");
 var Provider = require("react-redux").Provider;
 
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+
 function reducer(state) {
   return state;
 }
+
+const muiTheme = getMuiTheme({ userAgent: false });
 
 router.get("*", function(request, response) {
   var initialState = { title: "Javascript Invoices" };
@@ -22,7 +27,9 @@ router.get("*", function(request, response) {
       if (renderProps) {
         var html = ReactDOMServer.renderToString(
           <Provider store={store}>
-            <ReactRouter.RouterContext {...renderProps} />
+            <MuiThemeProvider muiTheme={muiTheme}>
+              <ReactRouter.RouterContext {...renderProps} />
+            </MuiThemeProvider>
           </Provider>
         );
         response.send(html);
