@@ -18,7 +18,7 @@ module.exports = (
       <Route path="products" component={Products} />
       <Route path="product/:id" component={Product} />
       <Route path="invoices" component={Invoices} />
-      <Route path="invoice/:id" component={Invoices} />
+      <Route path="invoice/:id" component={Invoice} />
     </Route>
   </Router>
 );

@@ -1,31 +1,116 @@
+import Invoices from "../models/invoices";
+import InvoiceItems from "../models/invoiceItems";
+import { ObjectID } from "mongodb";
+
 exports.all = (req, res) => {
-  res.send("all invoices");
+  Invoices.all(function(err, docs) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+    res.send(docs);
+  });
 };
+
 exports.add = (req, res) => {
-  res.send("add invoices");
+  let invoice = {
+    customer_id: req.body.customer_id,
+    discount: req.body.discount,
+    total: req.body.total
+  };
+  Invoices.addNew(invoice, function(err, doc) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+    res.send(doc.ops[0]);
+  });
 };
-exports.readById = (req, res) => {
-  res.send("readById invoices");
+
+exports.findById = (req, res) => {
+  Invoices.findById(req.params.invoice_id, function(err, docs) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+    res.send(docs);
+  });
 };
-exports.changeById = (req, res) => {
-  res.send("changeById invoices");
-};
+
 exports.removeById = (req, res) => {
-  res.send("removeById invoices");
+  Invoices.removeById(req.params.invoice_id, function(err, result) {
+    if (err) {
+      log.error(err);
+      return res.sendStatus(500);
+    }
+    res.sendStatus(200);
+  });
+};
+
+exports.updateById = (req, res) => {
+  Invoices.update(req.params.invoice_id, req.body, function(err, doc) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+    res.send(doc);
+  });
 };
 
 exports.allItems = (req, res) => {
-  res.send("allItems invoices");
+  InvoiceItems.all(req.params.invoice_id, function(err, docs) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+    res.send(docs);
+  });
 };
+
 exports.addItem = (req, res) => {
-  res.send("addItem invoices");
+  let item = {
+    invoice_id: ObjectID(req.params.invoice_id),
+    product_id: "",
+    quantity: req.body.quantity
+  };
+  InvoiceItems.addNew(item, function(err, doc) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+    res.send(doc.ops[0]);
+  });
 };
-exports.readItemById = (req, res) => {
-  res.send("readItemById invoices");
+
+exports.findItemById = (req, res) => {
+  InvoiceItems.findById(req.params.invoice_id, req.params.id, function(
+    err,
+    docs
+  ) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+    res.send(docs);
+  });
 };
-exports.changeItemById = (req, res) => {
-  res.send("changeItemById invoices");
+
+exports.updateItemById = (req, res) => {
+  if (req.body.product_id) {
+    req.body.product_id = ObjectID(req.body.product_id);
+  }
+  InvoiceItems.update(req.params.invoice_id, req.params.id, req.body, function(
+    err,
+    doc
+  ) {
+    if (err) {
+      return res.sendStatus(500);
+    }
+    res.send(doc);
+  });
 };
 exports.removeItemById = (req, res) => {
-  res.send("removeItemById invoices");
+  InvoiceItems.removeById(req.params.invoice_id, req.params.id, function(
+    err,
+    result
+  ) {
+    if (err) {
+      log.error(err);
+      return res.sendStatus(500);
+    }
+    res.sendStatus(200);
+  });
 };

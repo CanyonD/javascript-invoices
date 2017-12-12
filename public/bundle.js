@@ -21929,7 +21929,7 @@
 	    _react2.default.createElement(_reactRouter.Route, { path: "products", component: _Products2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: "product/:id", component: _Product2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: "invoices", component: _Invoices2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: "invoice/:id", component: _Invoices2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: "invoice/:id", component: _Invoice2.default })
 	  )
 	);
 
@@ -29513,7 +29513,7 @@
 	  margin: "0"
 	};
 
-	var model = [{ name: "ID", prop: "id" }, { name: "Customer", prop: "customer" }, { name: "Discount", prop: "discount" }, { name: "Total", prop: "total" }, { name: "Added", prop: "createdAt" }, { name: "Updated", prop: "updatedAt" }];
+	var model = [{ name: "Customer", prop: "customer" }, { name: "Discount", prop: "discount" }, { name: "Total", prop: "total" }];
 
 	var Invoices = function (_Component) {
 	  _inherits(Invoices, _Component);
@@ -29548,14 +29548,14 @@
 	  _createClass(Invoices, [{
 	    key: "handleEdit",
 	    value: function handleEdit(params) {
-	      this.props.history.push("/invoice/" + params.id);
+	      window.location.href = "/invoice/" + params._id;
 	    }
 	  }, {
 	    key: "handleRemove",
 	    value: function handleRemove(params) {
 	      var _this2 = this;
 
-	      _axios2.default.delete("/api/invoices/" + params.id).then(function (results) {
+	      _axios2.default.delete("/api/invoices/" + params._id).then(function (results) {
 	        _this2.componentDidMount();
 	      });
 	    }
@@ -29572,7 +29572,7 @@
 	        results.data.map(function (x, y) {
 	          if (x.customer_id !== 0 && x.customer_id !== null) {
 	            res[y].customer = _this3.state.customers.find(function (p) {
-	              return p.id === x.customer_id;
+	              return p._id === x.customer_id;
 	            }).name;
 	            _this3.setState({
 	              invoices: res
@@ -29590,16 +29590,12 @@
 	  }, {
 	    key: "handleAddInvoice",
 	    value: function handleAddInvoice(params) {
-	      var _this4 = this;
-
 	      _axios2.default.post("/api/invoices/", {
-	        customer_id: 0,
 	        total: 0,
 	        discount: 0
 	      }).then(function (results) {
 	        var res = results.data;
-	        // console.log(res);
-	        _this4.props.history.push("/invoice/" + res.id);
+	        window.location.href = "/invoice/" + res._id;
 	      });
 	    }
 	  }, {
@@ -45159,6 +45155,14 @@
 
 	var _arrowBack2 = _interopRequireDefault(_arrowBack);
 
+	var _MuiThemeProvider = __webpack_require__(459);
+
+	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
+
+	var _getMuiTheme = __webpack_require__(460);
+
+	var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -45166,6 +45170,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var muiTheme = (0, _getMuiTheme2.default)({ userAgent: false });
 
 	var customButtonStyle = {
 	  margin: "0",
@@ -45212,7 +45218,7 @@
 	    _this.handleChangeCustomer = _this.handleChangeCustomer.bind(_this);
 	    _this.calculateTotal = _this.calculateTotal.bind(_this);
 
-	    _this.id = _this.props !== undefined && _this.props.match !== undefined && _this.props.match.params !== undefined && _this.props.match.params.id !== undefined ? parseInt(_this.props.match.params.id, 10) : 0;
+	    _this.id = _this.props !== undefined && _this.props.params !== undefined && _this.props.params.id !== undefined ? _this.props.params.id : 0;
 	    return _this;
 	  }
 
@@ -45253,7 +45259,7 @@
 	      var value = event.target.value !== "" && !isNaN(parseInt(event.target.value, 10)) ? parseInt(event.target.value, 10) : 0;
 	      var total = 0;
 	      this.state.invoice.items.map(function (x, y) {
-	        console.log("calculate", x.price, x.quantity);
+	        // console.log("calculate", x.price, x.quantity);
 	        if (x.price === undefined) x.price = 0;
 	        total += x.price * x.quantity;
 	        return x;
@@ -45272,17 +45278,18 @@
 	    value: function handleRemoveClick(event) {
 	      var _this4 = this;
 
-	      _axios2.default.delete("/api/invoices/" + this.id + "/items/" + event.id).then(function (results) {
+	      console.log(event._id);
+	      _axios2.default.delete("/api/invoices/" + this.id + "/items/" + event._id).then(function (results) {
 	        _this4.componentDidMount();
 	      });
 	    }
 	  }, {
 	    key: "handleChangeProduct",
-	    value: function handleChangeProduct(event, row) {
+	    value: function handleChangeProduct(event, row, id) {
 	      var _this5 = this;
 
 	      var value = event.target.value;
-	      _axios2.default.put("/api/invoices/" + this.id + "/items/" + event.target.attributes.item_id.value, {
+	      _axios2.default.put("/api/invoices/" + this.id + "/items/" + id, {
 	        product_id: value
 	      }).then(function (results) {
 	        _this5.componentDidMount(true);
@@ -45327,8 +45334,8 @@
 	    value: function handleAddClick() {
 	      var _this8 = this;
 
-	      _axios2.default.post("/api/invoices/" + this.state.invoice.id + "/items/", {
-	        invoice_id: this.state.invoice.id,
+	      _axios2.default.post("/api/invoices/" + this.state.invoice._id + "/items/", {
+	        invoice_id: this.state.invoice._id,
 	        product_id: 0,
 	        quantity: 0
 	      }).then(function (results) {
@@ -45374,230 +45381,225 @@
 	      var _this11 = this;
 
 	      return _react2.default.createElement(
-	        "div",
-	        null,
+	        _MuiThemeProvider2.default,
+	        { muiTheme: muiTheme },
 	        _react2.default.createElement(
 	          "div",
 	          null,
 	          _react2.default.createElement(
-	            "form",
-	            { className: "form-horizontal" },
+	            "div",
+	            null,
 	            _react2.default.createElement(
-	              "fieldset",
-	              null,
+	              "form",
+	              { className: "form-horizontal" },
 	              _react2.default.createElement(
-	                "legend",
+	                "fieldset",
 	                null,
 	                _react2.default.createElement(
-	                  _IconButton2.default,
-	                  {
-	                    className: "col-md-4 control-label ",
-	                    tooltip: "Back to list",
-	                    onClick: function onClick() {
-	                      _this11.props.history.push("/invoices");
-	                    }
-	                  },
-	                  _react2.default.createElement(_arrowBack2.default, null)
+	                  "legend",
+	                  null,
+	                  _react2.default.createElement(
+	                    _IconButton2.default,
+	                    {
+	                      className: "col-md-4 control-label ",
+	                      tooltip: "Back to list",
+	                      onClick: function onClick() {
+	                        window.location.href = "/invoices";
+	                      }
+	                    },
+	                    _react2.default.createElement(_arrowBack2.default, null)
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "col-md-2 control-label" },
+	                    "Edit Invoice"
+	                  )
 	                ),
 	                _react2.default.createElement(
 	                  "div",
-	                  { className: "col-md-2 control-label" },
-	                  "Edit Invoice # ",
-	                  this.id
+	                  { className: "form-group" },
+	                  _react2.default.createElement(
+	                    "label",
+	                    { className: "control-label col-sm-2" },
+	                    "Customer"
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "col-md-3" },
+	                    _react2.default.createElement(
+	                      "select",
+	                      {
+	                        className: "form-control",
+	                        id: "sel1",
+	                        value: this.state.invoice.customer_id,
+	                        onChange: this.handleChangeCustomer
+	                      },
+	                      _react2.default.createElement(
+	                        "option",
+	                        { key: "ddm-i-" + 0, value: 0 },
+	                        "Please select customer"
+	                      ),
+	                      this.state.customers.map(function (x, y) {
+	                        return _react2.default.createElement(
+	                          "option",
+	                          { key: "ddm-i-" + x._id, value: x._id },
+	                          x.name
+	                        );
+	                      })
+	                    )
+	                  ),
+	                  _react2.default.createElement(
+	                    "label",
+	                    { className: "control-label col-sm-1" },
+	                    "Discount"
+	                  ),
+	                  _react2.default.createElement(
+	                    "div",
+	                    { className: "col-md-1" },
+	                    _react2.default.createElement("input", {
+	                      type: "text",
+	                      placeholder: "",
+	                      className: "form-control input-md",
+	                      value: this.state.invoice.discount,
+	                      onChange: this.handleChangeDiscount
+	                    })
+	                  ),
+	                  _react2.default.createElement(
+	                    "label",
+	                    { className: "control-label col-sm-2" },
+	                    "Total"
+	                  ),
+	                  _react2.default.createElement(
+	                    "label",
+	                    { className: "control-label col-sm-2" },
+	                    _react2.default.createElement(
+	                      "div",
+	                      { className: "col-md-1 big-size" },
+	                      Math.round(parseFloat(this.state.invoice.total) * 100) / 100
+	                    )
+	                  )
 	                )
 	              ),
 	              _react2.default.createElement(
 	                "div",
-	                { className: "form-group" },
+	                { className: "col-md-12" },
 	                _react2.default.createElement(
-	                  "label",
-	                  { className: "control-label col-sm-2" },
-	                  "Customer"
-	                ),
-	                _react2.default.createElement(
-	                  "div",
-	                  { className: "col-md-3" },
+	                  "table",
+	                  {
+	                    className: "table table-condensed table-hover table-striped"
+	                  },
 	                  _react2.default.createElement(
-	                    "select",
-	                    {
-	                      className: "form-control",
-	                      id: "sel1",
-	                      value: this.state.invoice.customer_id,
-	                      onChange: this.handleChangeCustomer
-	                    },
-	                    _react2.default.createElement(
-	                      "option",
-	                      { key: "ddm-i-" + 0, value: 0 },
-	                      "Please select customer"
-	                    ),
-	                    this.state.customers.map(function (x, y) {
-	                      return _react2.default.createElement(
-	                        "option",
-	                        { key: "ddm-i-" + x.id, value: x.id },
-	                        x.name
-	                      );
-	                    })
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  "label",
-	                  { className: "control-label col-sm-1" },
-	                  "Discount"
-	                ),
-	                _react2.default.createElement(
-	                  "div",
-	                  { className: "col-md-1" },
-	                  _react2.default.createElement("input", {
-	                    type: "text",
-	                    placeholder: "",
-	                    className: "form-control input-md",
-	                    value: this.state.invoice.discount,
-	                    onChange: this.handleChangeDiscount
-	                  })
-	                ),
-	                _react2.default.createElement(
-	                  "label",
-	                  { className: "control-label col-sm-2" },
-	                  "Total"
-	                ),
-	                _react2.default.createElement(
-	                  "div",
-	                  { className: "col-md-1 big-size" },
-	                  Math.round(parseFloat(this.state.invoice.total) * 100) / 100
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              "div",
-	              { className: "col-md-12" },
-	              _react2.default.createElement(
-	                "table",
-	                {
-	                  className: "table table-condensed table-hover table-striped"
-	                },
-	                _react2.default.createElement(
-	                  "thead",
-	                  null,
-	                  _react2.default.createElement(
-	                    "tr",
+	                    "thead",
 	                    null,
 	                    _react2.default.createElement(
-	                      "th",
-	                      null,
-	                      "#"
-	                    ),
-	                    _react2.default.createElement(
-	                      "th",
-	                      null,
-	                      "Product Name"
-	                    ),
-	                    _react2.default.createElement(
-	                      "th",
-	                      { className: "text-center" },
-	                      "Price"
-	                    ),
-	                    _react2.default.createElement(
-	                      "th",
-	                      { className: "text-center" },
-	                      "Quantity"
-	                    ),
-	                    _react2.default.createElement(
-	                      "th",
-	                      { style: { width: "100px" } },
-	                      _react2.default.createElement(
-	                        "section",
-	                        null,
-	                        _react2.default.createElement(
-	                          "button",
-	                          {
-	                            className: "btn btn-success",
-	                            style: customButtonStyle,
-	                            key: "addItem",
-	                            onClick: function onClick() {
-	                              return _this11.handleAddClick();
-	                            }
-	                          },
-	                          "Add product"
-	                        )
-	                      )
-	                    )
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  "tbody",
-	                  null,
-	                  this.state.invoice.items.map(function (y, k) {
-	                    return _react2.default.createElement(
 	                      "tr",
-	                      { key: k },
-	                      _react2.default.createElement(
-	                        "td",
-	                        null,
-	                        y.id
-	                      ),
-	                      _react2.default.createElement(
-	                        "td",
-	                        null,
-	                        _react2.default.createElement(
-	                          "select",
-	                          {
-	                            className: "form-control",
-	                            id: "sel-" + y.id,
-	                            item_id: y.id,
-	                            value: y.product_id,
-	                            onChange: function onChange(event) {
-	                              return _this11.handleChangeProduct(event, k);
-	                            }
-	                          },
-	                          _react2.default.createElement(
-	                            "option",
-	                            { key: "ddm-i-" + 0, value: null },
-	                            "Please select product"
-	                          ),
-	                          _this11.state.products.map(function (x, y) {
-	                            return _react2.default.createElement(
-	                              "option",
-	                              { key: "ddm-i-" + y, value: y },
-	                              x.name
-	                            );
-	                          })
-	                        )
-	                      ),
-	                      _react2.default.createElement(
-	                        "td",
-	                        { className: "text-center" },
-	                        y.price
-	                      ),
-	                      _react2.default.createElement(
-	                        "td",
-	                        { className: "text-center" },
-	                        _react2.default.createElement("input", {
-	                          type: "text",
-	                          className: "form-control input-sm",
-	                          value: y.quantity,
-	                          item_id: y.id,
-	                          onChange: function onChange(event) {
-	                            return _this11.handleChangeQuantity(event, k);
-	                          }
-	                        })
-	                      ),
+	                      null,
 	                      _react2.default.createElement(
 	                        "th",
 	                        null,
+	                        "Product Name"
+	                      ),
+	                      _react2.default.createElement(
+	                        "th",
+	                        { className: "text-center" },
+	                        "Price"
+	                      ),
+	                      _react2.default.createElement(
+	                        "th",
+	                        { className: "text-center" },
+	                        "Quantity"
+	                      ),
+	                      _react2.default.createElement(
+	                        "th",
+	                        { style: { width: "100px" } },
 	                        _react2.default.createElement(
-	                          "button",
-	                          {
-	                            className: "btn btn-danger",
-	                            style: customButtonStyle,
-	                            onClick: function onClick() {
-	                              return _this11.handleRemoveClick(y);
-	                            }
-	                          },
-	                          "Remove"
+	                          "section",
+	                          null,
+	                          _react2.default.createElement(
+	                            "button",
+	                            {
+	                              className: "btn btn-success",
+	                              style: customButtonStyle,
+	                              key: "addItem",
+	                              onClick: function onClick() {
+	                                return _this11.handleAddClick();
+	                              }
+	                            },
+	                            "Add product"
+	                          )
 	                        )
 	                      )
-	                    );
-	                  })
+	                    )
+	                  ),
+	                  _react2.default.createElement(
+	                    "tbody",
+	                    null,
+	                    this.state.invoice.items.map(function (y, k) {
+	                      return _react2.default.createElement(
+	                        "tr",
+	                        { key: k },
+	                        _react2.default.createElement(
+	                          "td",
+	                          null,
+	                          _react2.default.createElement(
+	                            "select",
+	                            {
+	                              className: "form-control",
+	                              id: "sel-" + y._id,
+	                              value: y.product_id,
+	                              onChange: function onChange(event) {
+	                                return _this11.handleChangeProduct(event, k, y._id);
+	                              }
+	                            },
+	                            _react2.default.createElement(
+	                              "option",
+	                              { key: "ddm-i-" + 0, value: null },
+	                              "Please select product"
+	                            ),
+	                            _this11.state.products.map(function (x, y) {
+	                              return _react2.default.createElement(
+	                                "option",
+	                                { key: "ddm-i-" + x._id, value: x._id },
+	                                x.name
+	                              );
+	                            })
+	                          )
+	                        ),
+	                        _react2.default.createElement(
+	                          "td",
+	                          { className: "text-center" },
+	                          y.price
+	                        ),
+	                        _react2.default.createElement(
+	                          "td",
+	                          { className: "text-center" },
+	                          _react2.default.createElement("input", {
+	                            type: "text",
+	                            className: "form-control input-sm",
+	                            value: y.quantity,
+	                            onChange: function onChange(event) {
+	                              return _this11.handleChangeQuantity(event, k);
+	                            }
+	                          })
+	                        ),
+	                        _react2.default.createElement(
+	                          "th",
+	                          null,
+	                          _react2.default.createElement(
+	                            "button",
+	                            {
+	                              className: "btn btn-danger",
+	                              style: customButtonStyle,
+	                              onClick: function onClick() {
+	                                return _this11.handleRemoveClick(y);
+	                              }
+	                            },
+	                            "Remove"
+	                          )
+	                        )
+	                      );
+	                    })
+	                  )
 	                )
 	              )
 	            )

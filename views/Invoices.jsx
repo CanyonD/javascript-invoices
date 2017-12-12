@@ -7,12 +7,9 @@ const customButtonStyle = {
 };
 
 let model = [
-  { name: "ID", prop: "id" },
   { name: "Customer", prop: "customer" },
   { name: "Discount", prop: "discount" },
-  { name: "Total", prop: "total" },
-  { name: "Added", prop: "createdAt" },
-  { name: "Updated", prop: "updatedAt" }
+  { name: "Total", prop: "total" }
 ];
 
 class Invoices extends Component {
@@ -42,15 +39,13 @@ class Invoices extends Component {
   }
 
   handleEdit(params) {
-    this.props.history.push("/invoice/" + params.id);
+    window.location.href = "/invoice/" + params._id;
   }
 
   handleRemove(params) {
-    axios
-      .delete("/api/invoices/" + params.id)
-      .then(results => {
-        this.componentDidMount();
-      });
+    axios.delete("/api/invoices/" + params._id).then(results => {
+      this.componentDidMount();
+    });
   }
 
   componentDidMount() {
@@ -63,7 +58,7 @@ class Invoices extends Component {
       results.data.map((x, y) => {
         if (x.customer_id !== 0 && x.customer_id !== null) {
           res[y].customer = this.state.customers.find(
-            p => p.id === x.customer_id
+            p => p._id === x.customer_id
           ).name;
           this.setState({
             invoices: res
@@ -82,14 +77,12 @@ class Invoices extends Component {
   handleAddInvoice(params) {
     axios
       .post("/api/invoices/", {
-        customer_id: 0,
         total: 0,
         discount: 0
       })
       .then(results => {
         let res = results.data;
-        // console.log(res);
-        this.props.history.push("/invoice/" + res.id);
+        window.location.href = "/invoice/" + res._id;
       });
   }
 

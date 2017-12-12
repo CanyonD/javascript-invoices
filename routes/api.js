@@ -20,8 +20,8 @@ module.exports = app => {
   // INVOICES API
   app.get("/api/invoices", invoicesController.all);
   app.post("/api/invoices", invoicesController.add);
-  app.get("/api/invoices/:invoice_id", invoicesController.readById);
-  app.put("/api/invoices/:invoice_id", invoicesController.changeById);
+  app.get("/api/invoices/:invoice_id", invoicesController.findById);
+  app.put("/api/invoices/:invoice_id", invoicesController.updateById);
   app.delete("/api/invoices/:invoice_id", invoicesController.removeById);
 
   // INVOICE ITEMS API
@@ -29,11 +29,11 @@ module.exports = app => {
   app.post("/api/invoices/:invoice_id/items", invoicesController.addItem);
   app.get(
     "/api/invoices/:invoice_id/items/:id",
-    invoicesController.readItemById
+    invoicesController.findItemById
   );
   app.put(
     "/api/invoices/:invoice_id/items/:id",
-    invoicesController.changeItemById
+    invoicesController.updateItemById
   );
   app.delete(
     "/api/invoices/:invoice_id/items/:id",

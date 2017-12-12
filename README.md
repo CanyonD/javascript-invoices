@@ -36,59 +36,61 @@ $ npm start
 
 `http://localhost:8000`
 
-## API Schema
+# API
 
-## Customers
+## Schema
+
+### Customers
 
 * id (ObjectID)
 * name (string)
 * address (string)
 * phone (string)
 
-## Products
+### Products
 
 * id (ObjectID)
 * name (string)
 * price (decimal)
 
-## Invoices
+### Invoices
 
 * id (ObjectID)
-* customer_id (integer)
+* customer_id (ObjectID)
 * discount (decimal)
 * total (decimal)
 
-## InvoiceItems
+### InvoiceItems
 
 * id (ObjectID)
-* invoice_id (integer)
-* product_id (integer)
+* invoice_id (ObjectID)
+* product_id (ObjectID)
 * quantity (decimal)
 
-# Resources
+## Resources
 
-## Customers
+### Customers
 
 ```
 GET|POST          /api/customers
 GET|PUT|DELETE    /api/customers/{id}
 ```
 
-## Products
+### Products
 
 ```
 GET|POST          /api/products
 GET|PUT|DELETE    /api/products/{id}
 ```
 
-## Invoices
+### Invoices
 
 ```
 GET|POST          /api/invoices
 GET|PUT|DELETE    /api/invoices/{id}
 ```
 
-## InvoiceItems
+### InvoiceItems
 
 ```
 GET|POST          /api/invoices/{id}/items
