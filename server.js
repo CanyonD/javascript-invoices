@@ -5,7 +5,7 @@ require("babel-register")({
 var configFile = require("./config.json");
 const ip = configFile.web.url,
   defaultPort = configFile.web.port,
-  mongoUrl = configFile.mongo.url + ":" + configFile.mongo.port;
+  mongoUrl = configFile.mongo.url + ":" + configFile.mongo.port + configFile.mongo.default;
 
 var express = require("express"),
   app = express(),

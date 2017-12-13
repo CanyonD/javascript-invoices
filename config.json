@@ -4,7 +4,8 @@
     "port": 8000
   },
   "mongo": {
-    "port": 27017,
-    "url": "mongodb://localhost"
+    "port": 35946,
+    "url": "mongodb://test:test@ds135946.mlab.com",
+    "default": "/invoices"
   }
 }

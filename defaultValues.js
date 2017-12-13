@@ -1,7 +1,7 @@
 var db = require("./db");
 
 var configFile = require("./config.json");
-const mongoUrl = configFile.mongo.url + ":" + configFile.mongo.port;
+const mongoUrl = configFile.mongo.url + ":" + configFile.mongo.port + configFile.mongo.default;
 
 db.connect(mongoUrl, function(err) {
   if (err) {
