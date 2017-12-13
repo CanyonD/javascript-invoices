@@ -1,11 +1,12 @@
 ## Global dependencies
 
 * node
+
   `https://nodejs.org/en/download/`
 * npm
+  
   `https://docs.npmjs.com/getting-started/installing-node`
 * webpack
-
 ```sh
 $ npm install webpack -g
 ```
@@ -17,8 +18,10 @@ $ npm install nodemon -g
 ```
 
 * mongoDB
+
 `https://www.mongodb.com/download-center?jmp=homepage#community`
-after:
+
+then open terminal and type:
 ```sh
 $ mongod
 ```
@@ -30,6 +33,10 @@ $ mongod
 $ npm install
 ```
 ## Added default values to MongoDB
+
+```sh
+$ npm run default
+```
 
 ## Run the NodeJS server
 
