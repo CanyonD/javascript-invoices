@@ -17,7 +17,7 @@ $ npm install nodemon -g
 ```
 
 * mongoDB
-https://www.mongodb.com/download-center?jmp=homepage#community
+`https://www.mongodb.com/download-center?jmp=homepage#community`
 after:
 ```sh
 $ mongod
