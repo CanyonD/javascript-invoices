@@ -17,7 +17,11 @@ $ npm install nodemon -g
 ```
 
 * mongoDB
-
+https://www.mongodb.com/download-center?jmp=homepage#community
+after:
+```sh
+$ mongod
+```
 # Getting Started
 
 ## Install npm dependencies
@@ -25,6 +29,7 @@ $ npm install nodemon -g
 ```sh
 $ npm install
 ```
+## Added default values to MongoDB
 
 ## Run the NodeJS server
 

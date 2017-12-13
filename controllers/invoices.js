@@ -56,6 +56,7 @@ exports.updateById = (req, res) => {
 exports.allItems = (req, res) => {
   InvoiceItems.all(req.params.invoice_id, function(err, docs) {
     if (err) {
+      console.error(err)
       return res.sendStatus(500);
     }
     res.send(docs);

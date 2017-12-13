@@ -65,7 +65,7 @@ class Invoice extends Component {
             if (results.data === null) res[y].items = [];
             else {
               res[y].price = results.data.price;
-              res[y].product_id = results.data.id;
+              res[y].product_id = results.data._id;
             }
             this.setState({
               invoice: Object.assign(this.state.invoice, { items: res })
@@ -108,7 +108,7 @@ class Invoice extends Component {
   }
 
   handleRemoveClick(event) {
-    console.log(event._id)
+    console.log(event._id);
     axios
       .delete("/api/invoices/" + this.id + "/items/" + event._id)
       .then(results => {
@@ -119,15 +119,9 @@ class Invoice extends Component {
   handleChangeProduct(event, row, id) {
     let value = event.target.value;
     axios
-      .put(
-        "/api/invoices/" +
-          this.id +
-          "/items/" +
-          id,
-        {
-          product_id: value
-        }
-      )
+      .put("/api/invoices/" + this.id + "/items/" + id, {
+        product_id: value
+      })
       .then(results => {
         this.componentDidMount(true);
         this.componentWillMount();
@@ -157,11 +151,7 @@ class Invoice extends Component {
         total: total
       })
       .then(results => {
-        this.setState({
-          invoice: Object.assign(results.data, {
-            items: this.state.invoice.items
-          })
-        });
+        this.componentWillMount();
       });
   }
 
@@ -189,21 +179,15 @@ class Invoice extends Component {
     }
   }
 
-  handleChangeQuantity(event, row) {
+  handleChangeQuantity(event, row, id) {
     let value =
       event.target.value !== "" && !isNaN(parseInt(event.target.value, 10))
         ? parseInt(event.target.value, 10)
         : 0;
     axios
-      .put(
-        "/api/invoices/" +
-          this.id +
-          "/items/" +
-          event.target.attributes.item_id.value,
-        {
-          quantity: value
-        }
-      )
+      .put("/api/invoices/" + this.id + "/items/" + id, {
+        quantity: value
+      })
       .then(results => {
         this.componentDidMount();
         const tmp_invoice = this.state.invoice;
@@ -247,18 +231,20 @@ class Invoice extends Component {
                       <option key={`ddm-i-${0}`} value={0}>
                         Please select customer
                       </option>
-                      {this.state.customers.map((x, y) => (
+                      {this.state.customers.map((x, y) =>
                         <option key={`ddm-i-${x._id}`} value={x._id}>
                           {x.name}
                         </option>
-                      ))}
+                      )}
                     </select>
                   </div>
                   <label className="control-label col-sm-1">Discount</label>
-                  <div className="col-md-1">
+                  <div className="col-md-2">
                     <input
-                      type="text"
+                      type="number"
                       placeholder=""
+                      min = '0'
+                      max = '100'
                       className={"form-control input-md"}
                       value={this.state.invoice.discount}
                       onChange={this.handleChangeDiscount}
@@ -297,7 +283,7 @@ class Invoice extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.invoice.items.map((y, k) => (
+                    {this.state.invoice.items.map((y, k) =>
                       <tr key={k}>
                         <td>
                           <select
@@ -305,28 +291,28 @@ class Invoice extends Component {
                             id={`sel-${y._id}`}
                             value={y.product_id}
                             onChange={event =>
-                              this.handleChangeProduct(event, k, y._id)
-                            }
+                              this.handleChangeProduct(event, k, y._id)}
                           >
-                            <option key={`ddm-i-${0}`} value={null}>
+                            <option key={`ddm-i-${0}`} value={0}>
                               Please select product
                             </option>
-                            {this.state.products.map((x, y) => (
+                            {this.state.products.map((x, y) =>
                               <option key={`ddm-i-${x._id}`} value={x._id}>
                                 {x.name}
                               </option>
-                            ))}
+                            )}
                           </select>
                         </td>
-                        <td className="text-center">{y.price}</td>
+                        <td className="text-center">
+                          {y.price}
+                        </td>
                         <td className="text-center">
                           <input
                             type="text"
                             className={"form-control input-sm"}
                             value={y.quantity}
                             onChange={event =>
-                              this.handleChangeQuantity(event, k)
-                            }
+                              this.handleChangeQuantity(event, k, y._id)}
                           />
                         </td>
                         <th>
@@ -339,7 +325,7 @@ class Invoice extends Component {
                           </button>
                         </th>
                       </tr>
-                    ))}
+                    )}
                   </tbody>
                 </table>
               </div>

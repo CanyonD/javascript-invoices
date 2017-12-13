@@ -77,6 +77,7 @@ class Invoices extends Component {
   handleAddInvoice(params) {
     axios
       .post("/api/invoices/", {
+        customer_id: 0,
         total: 0,
         discount: 0
       })

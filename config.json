@@ -1,0 +1,10 @@
+{
+  "web": {
+    "url": "localhost",
+    "port": 8000
+  },
+  "mongo": {
+    "port": 27017,
+    "url": "mongodb://localhost"
+  }
+}
