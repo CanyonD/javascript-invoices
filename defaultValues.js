@@ -1,7 +1,7 @@
 var db = require("./db");
 
-const ip = "localhost",
-  mongoUrl = "mongodb://" + ip + ":27017/invoices";
+var configFile = require("./config.json");
+const mongoUrl = configFile.mongo.url + ":" + configFile.mongo.port;
 
 db.connect(mongoUrl, function(err) {
   if (err) {
